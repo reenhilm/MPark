@@ -1,0 +1,64 @@
+﻿<div class="table-responsive">
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Deviceid</th>
+            <th scope="col">Location</th>
+            <th scope="col">Date</th>
+            <th scope="col">Type</th>
+            <th scope="col">Status</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var mParkMachine in machinesList)
+    {
+        <tr>
+            <th scope="row">#</th>
+            <td>@mParkMachine.Id</td>
+            <td>@mParkMachine.LocationCity<br />
+                @mParkMachine.LocationCountry
+            </td>
+            <td>@mParkMachine.LastUpdated</td>
+            <td>@mParkMachine.Type</td>
+                    <td>
+                        <button type="button"
+                            class="btn btn-@(mParkMachine.IsOnline ? "success" : "danger")"
+                            @onclick="() => ItemCompleted(mParkMachine)"
+                            @onclick:stopPropagation="true">
+                            @(mParkMachine.IsOnline ? "Online" : "Offline")
+                        </button>
+                    </td>
+            <td>
+                <button @onclick="() => Remove(mParkMachine)" @onclick:stopPropagation="true" class="btn btn-danger">X</button>
+                <button @onclick="() => Remove(mParkMachine)" @onclick:stopPropagation="true" class="btn btn-danger">X</button>
+                <button @onclick="() => Remove(mParkMachine)" @onclick:stopPropagation="true" class="btn btn-danger">X</button>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+</div>
+
+
+
+@code {
+    [Parameter]
+    public List<MParkMachine> machinesList { get; set; } = new List<MParkMachine>();
+
+    private void ItemCompleted(MParkMachine mParkMachine)
+    {
+        mParkMachine.IsOnline = mParkMachine.IsOnline ? false : true;
+
+        //ToDo call api 
+        //Act on success
+    }
+
+    private void Remove(MParkMachine mParkMachine)
+    {
+
+        //ToDo call api
+        machinesList.Remove(mParkMachine);
+    }
+}

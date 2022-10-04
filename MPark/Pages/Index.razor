@@ -1,9 +1,47 @@
 ﻿@page "/"
+@using MPark.Services
 
-<PageTitle>Index</PageTitle>
+<PageTitle>Dashboard</PageTitle>
+<div class="container border border-success mt-3">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-0 pb-0">Dashboard</h1>
+            <p class="mt-0 pt-0">Overview of your Internet of Things</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2 mt-2">
+            <div>
+                <h5>Daily Stats</h5>
+                3 000 000 messages sent
+            </div>
+            <div>Total Devices</div>
+            <div>New Devices</div>
+            <div>C2D Count</div>
+        </div>        
+        <div class="col-auto"><MParkMachines machinesList="mParkMachinesList"></MParkMachines></div>
+    </div>
+</div>
 
-<h1>Hello, world!</h1>
+@code {
 
-Welcome to your new app.
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+    private List<MParkMachine> mParkMachinesList = new List<MParkMachine>();
+
+    [Inject]
+    public IMParkMachinesAPIClient machinesAPIClient { get; set; } = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        mParkMachinesList = (await machinesAPIClient.GetAsync())?.ToList();
+    }
+
+    private async Task AddItem(CreateMParkMachine createMParkMachine)
+    {
+        var createdMParkMachine = await machinesAPIClient.PostAsync(createMParkMachine);
+
+        if (createdMParkMachine != null)
+            mParkMachinesList.Add(createdMParkMachine);
+    }
+
+}
