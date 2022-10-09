@@ -9,13 +9,14 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using MPark.Shared;
 using System;
+using System.Linq;
 
 namespace MParkServer
 {
     public static class MParkMachinesAPI
     {
         [FunctionName("GetMachines")]
-        public static async Task<IActionResult> Run(
+        public static IActionResult Get(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "machines")] HttpRequest req,
             ILogger log)
         {
@@ -25,8 +26,41 @@ namespace MParkServer
             return new OkObjectResult(machines);
         }
 
+        [FunctionName("GetById")]
+        public static IActionResult GetById(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "machines/{id}")] HttpRequest req,
+        ILogger log, Guid id)
+        {
+            log.LogInformation("C# HTTP trigger function processed a request.");
+
+            //TODO Implement GetById
+            return new OkObjectResult(GetMParkMachines().FirstOrDefault(m => m.Id == id));
+        }        
+
+        [FunctionName("DeleteMachine")]
+        public static IActionResult Delete(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "machines/{id}")] HttpRequest req,
+        ILogger log, Guid id)
+        {
+            log.LogInformation("C# HTTP trigger function processed a request.");
+
+            //TODO Implement Delete
+            return new OkResult();
+        }
+
+        [FunctionName("UpdateMachine")]
+        public static IActionResult Put(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "machines/{id}")] HttpRequest req,
+        ILogger log, UpdateMParkMachine updateMParkMachine)
+        {
+            log.LogInformation("C# HTTP trigger function processed a request.");
+
+            //TODO Implement Update
+            return new OkResult();
+        }
+
         [FunctionName("CreateMachines")]
-        public static async Task<IActionResult> Create(
+        public static async Task<IActionResult> Post(
                 [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "machines")] HttpRequest req,
                 ILogger log)
         {
@@ -45,23 +79,27 @@ namespace MParkServer
                 Id= Guid.NewGuid(),
                 LastUpdated= DateTime.Now,
                 Data = createMParkMachine.Data,
-                LocationCity = createMParkMachine.LocationCity,
-                LocationCountry = createMParkMachine.LocationCountry,
+                City = createMParkMachine.City,
+                Country = CountryList.GetCountries().First(c => c.Id == createMParkMachine.CountryId),
                 Type = createMParkMachine.Type
             };
 
             return new OkObjectResult(machine);
         }
 
+
+
         private static IEnumerable<MParkMachine> GetMParkMachines()
         {
+            Country cSweden = CountryList.GetCountries().ToList().FirstOrDefault(c => c.Id == 1);
+
             return new List<MParkMachine>()
             {
                 new MParkMachine()
                 {
-                    Id = Guid.NewGuid(),
-                    LocationCity = "Eskilstuna",
-                    LocationCountry = "Sweden",
+                    Id = Guid.Parse("35f70e59-cce4-4144-a668-fdb90a28ea3f"),
+                    City = "Eskilstuna",
+                    Country = cSweden,
                     LastUpdated = DateTime.Now.AddDays(-4).AddHours(22).AddMinutes(15),
                     IsOnline = true,
                     Type = MachineType.Humidity,
@@ -69,18 +107,18 @@ namespace MParkServer
                 },
                 new MParkMachine()
                 {
-                    Id = Guid.NewGuid(),
-                    LocationCity = "Västerås",
-                    LocationCountry = "Sweden",
+                    Id = Guid.Parse("7795223a-901a-41d9-841c-f36968eb253d"),
+                    City = "Västerås",
+                    Country = cSweden,
                     LastUpdated = DateTime.Now.AddDays(-10).AddHours(11).AddMinutes(55),
                     Type = MachineType.Temperature,
                     Data = "Melon"
                 },
                 new MParkMachine()
                 {
-                    Id = Guid.NewGuid(),
-                    LocationCity = "Stockholm",
-                    LocationCountry = "Sweden",
+                    Id = Guid.Parse("37db4e8c-6beb-4226-b8ae-6594eb941ed6"),
+                    City = "Stockholm",
+                    Country = cSweden,
                     LastUpdated = DateTime.Now.AddDays(-105).AddHours(2).AddMinutes(45),
                     Type = MachineType.Temperature,
                     Data = "Kiwi",
@@ -88,9 +126,9 @@ namespace MParkServer
                 },
                 new MParkMachine()
                 {
-                    Id = Guid.NewGuid(),
-                    LocationCity = "Sundsvall",
-                    LocationCountry = "Sweden",
+                    Id = Guid.Parse("e2bd702f-8e42-4b6e-a671-06db0162efb7"),
+                    City = "Sundsvall",
+                    Country = cSweden,
                     LastUpdated = DateTime.Now.AddDays(-305).AddHours(10).AddMinutes(1),
                     Type = MachineType.Temperature,
                     Data = "Citron"

@@ -17,8 +17,8 @@
         <tr>
             <th scope="row">#</th>
             <td>@mParkMachine.Id</td>
-            <td>@mParkMachine.LocationCity<br />
-                @mParkMachine.LocationCountry
+            <td>@mParkMachine.City<br />
+                @(mParkMachine.Country?.Name ?? "Unknown Country")
             </td>
             <td>@mParkMachine.LastUpdated</td>
             <td>@mParkMachine.Type</td>
@@ -31,8 +31,8 @@
                         </button>
                     </td>
             <td>
-                <button @onclick="() => Remove(mParkMachine)" @onclick:stopPropagation="true" class="btn btn-danger">X</button>
-                <button @onclick="() => Remove(mParkMachine)" @onclick:stopPropagation="true" class="btn btn-danger">X</button>
+                <a href="@($"MachineEdit/{mParkMachine.Id}")" class="btn btn-primary">Edit</a>
+                <button onclick="alert('not implemented')" @onclick:stopPropagation="true" class="btn btn-danger">Edit data</button>
                 <button @onclick="() => Remove(mParkMachine)" @onclick:stopPropagation="true" class="btn btn-danger">X</button>
             </td>
         </tr>

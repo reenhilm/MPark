@@ -5,9 +5,9 @@ VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MPark", "MPark\MPark.csproj", "{D25FC8C4-5272-4105-AA72-76B1F14821E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MParkServer", "MParkServer\MParkServer.csproj", "{54152976-3F6A-42CB-BE91-C0DE75B1CD62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MParkServer", "MParkServer\MParkServer.csproj", "{54152976-3F6A-42CB-BE91-C0DE75B1CD62}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MPark.Shared", "MPark.Shared\MPark.Shared.csproj", "{3449E29A-6F0A-44A9-B571-C948893751DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MPark.Shared", "MPark.Shared\MPark.Shared.csproj", "{3449E29A-6F0A-44A9-B571-C948893751DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

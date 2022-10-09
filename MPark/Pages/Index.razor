@@ -29,16 +29,16 @@
     private List<MParkMachine> mParkMachinesList = new List<MParkMachine>();
 
     [Inject]
-    public IMParkMachinesAPIClient machinesAPIClient { get; set; } = default!;
+    public IMParkMachinesService machinesService { get; set; } = default!;
 
     protected override async Task OnInitializedAsync()
     {
-        mParkMachinesList = (await machinesAPIClient.GetAsync())?.ToList();
+        mParkMachinesList = (await machinesService.GetAsync())?.ToList();
     }
 
     private async Task AddItem(CreateMParkMachine createMParkMachine)
     {
-        var createdMParkMachine = await machinesAPIClient.PostAsync(createMParkMachine);
+        var createdMParkMachine = await machinesService.PostAsync(createMParkMachine);
 
         if (createdMParkMachine != null)
             mParkMachinesList.Add(createdMParkMachine);
