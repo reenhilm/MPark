@@ -7,6 +7,6 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.Services.AddHttpClient<IMParkMachinesService, MParkMachinesService>(client => client.BaseAddress = new Uri("http://localhost:7071"));
+builder.Services.AddHttpClient<IMParkMachinesService, MParkMachinesService>(client => client.BaseAddress = new Uri(APIClientSettings.BaseAddressURI));
 
 await builder.Build().RunAsync();
